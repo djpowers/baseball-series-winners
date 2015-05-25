@@ -5,6 +5,7 @@ gem 'rake'
 gem 'sinatra'
 gem 'sinatra-activerecord'
 gem 'sinatra-contrib'
+gem 'xmlstats'
 
 group :test, :development do
   gem 'capybara'
@@ -12,4 +13,5 @@ group :test, :development do
   gem 'rspec'
   gem 'vcr'
   gem 'webmock'
+  gem 'dotenv'
 end

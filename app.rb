@@ -1,9 +1,13 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/reloader'
+require 'xmlstats'
 
 configure :development, :test do
   require 'pry'
+  require 'dotenv'
+
+  Dotenv.load
 end
 
 configure do
