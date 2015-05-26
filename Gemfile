@@ -6,6 +6,7 @@ gem 'sinatra'
 gem 'sinatra-activerecord'
 gem 'sinatra-contrib'
 gem 'xmlstats'
+gem 'haml'
 
 group :test, :development do
   gem 'capybara'

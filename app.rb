@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/reloader'
 require 'xmlstats'
+require 'haml'
 
 configure :development, :test do
   require 'pry'
@@ -20,6 +21,5 @@ Dir[File.join(File.dirname(__FILE__), 'app', '**', '*.rb')].each do |file|
 end
 
 get '/' do
-  @title = "Hello World"
-  erb :index
+  haml :index
 end
