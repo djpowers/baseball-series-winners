@@ -3,6 +3,7 @@ require 'sinatra/activerecord'
 require 'sinatra/reloader'
 require 'xmlstats'
 require 'haml'
+require 'api_cache'
 
 configure :development, :test do
   require 'pry'
@@ -21,6 +22,8 @@ Dir[File.join(File.dirname(__FILE__), 'app', '**', '*.rb')].each do |file|
 end
 
 get '/' do
-  @teams = Xmlstats.mlb_teams
+  @teams = APICache.get('teams', cache: 86400, fail: []) do
+    Xmlstats.mlb_teams
+  end
   haml :index
 end
