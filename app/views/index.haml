@@ -1,1 +1,7 @@
-%section.container
+%h1 MLB Series Winners
+%table
+  %tr
+    %th Team
+  - @teams.each do |team|
+    %tr
+      %td= team.full_name

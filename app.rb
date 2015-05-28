@@ -21,5 +21,6 @@ Dir[File.join(File.dirname(__FILE__), 'app', '**', '*.rb')].each do |file|
 end
 
 get '/' do
+  @teams = Xmlstats.mlb_teams
   haml :index
 end
