@@ -7,7 +7,7 @@ gem 'sinatra-activerecord'
 gem 'sinatra-contrib'
 gem 'xmlstats'
 gem 'haml'
-gem 'api_cache'
+gem 'redis'
 
 group :test, :development do
   gem 'capybara'

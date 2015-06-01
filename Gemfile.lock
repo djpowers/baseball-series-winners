@@ -15,7 +15,6 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.3.8)
-    api_cache (0.3.0)
     arel (6.0.0)
     backports (3.6.4)
     builder (3.2.2)
@@ -52,6 +51,7 @@ GEM
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.4.2)
+    redis (3.2.1)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
@@ -97,13 +97,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  api_cache
   capybara
   dotenv
   haml
   pg
   pry
   rake
+  redis
   rspec
   sinatra
   sinatra-activerecord

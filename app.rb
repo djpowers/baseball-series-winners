@@ -3,7 +3,9 @@ require 'sinatra/activerecord'
 require 'sinatra/reloader'
 require 'xmlstats'
 require 'haml'
-require 'api_cache'
+require 'redis'
+
+redis = Redis.new
 
 configure :development, :test do
   require 'pry'
