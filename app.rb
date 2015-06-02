@@ -24,8 +24,8 @@ Dir[File.join(File.dirname(__FILE__), 'app', '**', '*.rb')].each do |file|
 end
 
 get '/' do
-  @teams = APICache.get('teams', cache: 86400, fail: []) do
-    Xmlstats.mlb_teams
-  end
+  @teams = redis.smembers('team').map!{ |x| JSON.parse(x) }
+  @schedules = redis.smembers('schedule').map!{ |x| JSON.parse(x) }
+
   haml :index
 end

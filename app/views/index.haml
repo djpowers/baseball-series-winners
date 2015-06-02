@@ -4,4 +4,9 @@
     %th Team
   - @teams.each do |team|
     %tr
-      %td= team.full_name
+      %td
+        = team['full_name']
+      - @schedules.select{ |x| x.first['team']['team_id'] == team['team_id'] }.each do |games|
+        - games.reverse.each do |game|
+          %td
+            = game['opponent']['full_name']
