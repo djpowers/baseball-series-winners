@@ -15,12 +15,12 @@ const fetch = require('node-fetch');
 
 const username = process.env.USERNAME;
 const password = process.env.PASSWORD;
-const season = '2017';
-const team = 'bos';
 
 app.get('/api/latest_updates/:season', (req, res) => {
   fetch(
-    `https://api.mysportsfeeds.com/v1.2/pull/mlb/${season}-regular/latest_updates.json`,
+    `https://api.mysportsfeeds.com/v1.2/pull/mlb/${
+      req.params.season
+    }-regular/latest_updates.json`,
     {
       method: 'get',
       headers: {
@@ -32,9 +32,11 @@ app.get('/api/latest_updates/:season', (req, res) => {
     .then(json => res.json(json));
 });
 
-app.get('/api/seasons/:season', (req, res) => {
+app.get('/api/seasons/:season/:team', (req, res) => {
   fetch(
-    `https://api.mysportsfeeds.com/v1.2/pull/mlb/${season}-regular/team_gamelogs.json?team=${team}`,
+    `https://api.mysportsfeeds.com/v1.2/pull/mlb/${
+      req.params.season
+    }-regular/team_gamelogs.json?team=${req.params.team}`,
     {
       method: 'get',
       headers: {
