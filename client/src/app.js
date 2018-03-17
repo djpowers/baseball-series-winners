@@ -42,4 +42,17 @@ d3
       .append('g')
       .attr('transform', `translate(0, ${height})`)
       .call(d3.axisBottom(xScale));
+
+    svg
+      .selectAll('rect')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr('x', d => xScale(d.game.date))
+      .attr('y', d => yScale(parseInt(d.stats.RunDifferential['#text'])))
+      .attr('width', d => xScale.bandwidth())
+      .attr(
+        'height',
+        d => height - yScale(parseInt(d.stats.RunDifferential['#text'])),
+      );
   });
