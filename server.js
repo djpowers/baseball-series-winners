@@ -16,11 +16,11 @@ const fetch = require('node-fetch');
 const username = process.env.USERNAME;
 const password = process.env.PASSWORD;
 
-app.get('/api/latest_updates/:season', (req, res) => {
+app.get('/api/overall_team_standings/:season', (req, res) => {
   fetch(
     `https://api.mysportsfeeds.com/v1.2/pull/mlb/${
       req.params.season
-    }-regular/latest_updates.json`,
+    }-regular/overall_team_standings.json?teamstats=none&sort=team.abbr`,
     {
       method: 'get',
       headers: {
@@ -36,7 +36,9 @@ app.get('/api/seasons/:season/:team', (req, res) => {
   fetch(
     `https://api.mysportsfeeds.com/v1.2/pull/mlb/${
       req.params.season
-    }-regular/team_gamelogs.json?team=${req.params.team}`,
+    }-regular/team_gamelogs.json?team=${
+      req.params.team
+    }&teamstats=W,L,RF,RA,RunDiff`,
     {
       method: 'get',
       headers: {
