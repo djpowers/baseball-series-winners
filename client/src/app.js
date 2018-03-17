@@ -54,5 +54,7 @@ d3
       .attr(
         'height',
         d => height - yScale(parseInt(d.stats.RunDifferential['#text'])),
-      );
+      )
+      .classed('win', d => parseInt(d.stats.Wins['#text']))
+      .classed('loss', d => parseInt(d.stats.Wins['#text']) === 0);
   });
