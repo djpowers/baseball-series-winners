@@ -4,9 +4,14 @@
   "private": true,
   "proxy": "http://localhost:3001/",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "devDependencies": {
+    "react-scripts": "^1.1.1",
     "webpack-dev-server": "^3.1.1"
+  },
+  "dependencies": {
+    "d3": "^4.13.0"
   }
 }
