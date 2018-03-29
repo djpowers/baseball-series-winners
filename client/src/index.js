@@ -56,8 +56,6 @@ const options = dropDown
 
 options.text(d => d).attr('value', d => d);
 
-updateChart();
-
 function updateChart() {
   d3
     .request(`/api/seasons/${new Date().getFullYear() - 1}/${
@@ -65,11 +63,9 @@ function updateChart() {
     }`)
     .get((error, request) => {
       const data = JSON.parse(request.response).teamgamelogs.gamelogs;
-      console.log(data);
 
-      const extentX = d3.extent(data, d => new Date(d.game.date));
       const extentY = d3.extent(data, d =>
-        parseInt(d.stats.RunDifferential['#text']));
+        parseInt(d.stats.RunDifferential['#text'], 10));
 
       const svg = d3
         .select('body')
@@ -103,16 +99,18 @@ function updateChart() {
         .enter()
         .append('rect')
         .attr('x', d => xScale(d.game.date))
-        .attr('y', d => yScale(parseInt(d.stats.RunDifferential['#text'])))
-        .attr('width', d => xScale.bandwidth())
+        .attr('y', d => yScale(parseInt(d.stats.RunDifferential['#text'], 10)))
+        .attr('width', xScale.bandwidth())
         .attr(
           'height',
-          d => height - yScale(parseInt(d.stats.RunDifferential['#text'])),
+          d => height - yScale(parseInt(d.stats.RunDifferential['#text'], 10)),
         )
-        .classed('win', d => parseInt(d.stats.Wins['#text']))
-        .classed('loss', d => parseInt(d.stats.Wins['#text']) === 0);
+        .classed('win', d => parseInt(d.stats.Wins['#text'], 10))
+        .classed('loss', d => parseInt(d.stats.Wins['#text'], 10) === 0);
     });
 }
+
+updateChart();
 
 d3.select('[name=team-list]').on('change', () => {
   d3.select('svg').remove();
