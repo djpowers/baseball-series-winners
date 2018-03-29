@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "babel-core": "^6.26.0",
-    "btoa": "^1.1.2",
+    "btoa": "^1.2.1",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "node-fetch": "^2.1.1"
@@ -13,8 +13,7 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server.js",
     "client": "node start-client.js",
-    "heroku-postbuild":
-      "cd client/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "heroku-postbuild": "cd client/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "lint": "eslint ."
   },
   "devDependencies": {
