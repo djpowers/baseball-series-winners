@@ -65,7 +65,8 @@ function updateChart() {
       const data = JSON.parse(request.response).teamgamelogs.gamelogs;
 
       const extentY = d3.extent(data, d =>
-        parseInt(d.stats.RunDifferential['#text'], 10));
+        -1 * parseInt(d.stats.RunDifferential['#text'], 10)
+      );
 
       const svg = d3
         .select('body')
@@ -78,7 +79,7 @@ function updateChart() {
       const yScale = d3
         .scaleLinear()
         .domain(extentY)
-        .range([height, 0]);
+        .range([0, height]);
 
       svg.call(d3.axisLeft(yScale));
 
@@ -99,11 +100,17 @@ function updateChart() {
         .enter()
         .append('rect')
         .attr('x', d => xScale(d.game.date))
-        .attr('y', d => yScale(parseInt(d.stats.RunDifferential['#text'], 10)))
+        .attr('y', d => {
+          let runDiff = parseInt(d.stats.RunDifferential['#text'], 10);
+          return yScale(Math.min(0, -1 * runDiff));
+        })
         .attr('width', xScale.bandwidth())
         .attr(
           'height',
-          d => height - yScale(parseInt(d.stats.RunDifferential['#text'], 10)),
+          d => {
+            let runDiff = parseInt(d.stats.RunDifferential['#text'], 10);
+            return Math.abs(yScale(runDiff) - yScale(0));
+          },
         )
         .classed('win', d => parseInt(d.stats.Wins['#text'], 10))
         .classed('loss', d => parseInt(d.stats.Wins['#text'], 10) === 0);
