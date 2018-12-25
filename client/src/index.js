@@ -57,64 +57,60 @@ const options = dropDown
 options.text(d => d).attr('value', d => d);
 
 function updateChart() {
-  d3
-    .request(`/api/seasons/${new Date().getFullYear() - 1}/${
-      d3.select('[name=team-list]').node().value
-    }`)
-    .get((error, request) => {
-      const data = JSON.parse(request.response).teamgamelogs.gamelogs;
+  d3.request(`/api/seasons/${new Date().getFullYear() - 1}/${
+    d3.select('[name=team-list]').node().value
+  }`).get((error, request) => {
+    const data = JSON.parse(request.response).teamgamelogs.gamelogs;
 
-      const extentY = d3.extent(data, d =>
-        -1 * parseInt(d.stats.RunDifferential['#text'], 10)
-      );
+    const extentY = d3.extent(
+      data,
+      d => -1 * parseInt(d.stats.RunDifferential['#text'], 10),
+    );
 
-      const svg = d3
-        .select('body')
-        .append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        .append('g')
-        .attr('transform', `translate(${margin.left}, ${margin.top})`);
+    const svg = d3
+      .select('body')
+      .append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-      const yScale = d3
-        .scaleLinear()
-        .domain(extentY)
-        .range([0, height]);
+    const yScale = d3
+      .scaleLinear()
+      .domain(extentY)
+      .range([0, height]);
 
-      svg.call(d3.axisLeft(yScale));
+    svg.call(d3.axisLeft(yScale));
 
-      const xScale = d3
-        .scaleBand()
-        .domain(data.map(d => d.game.date))
-        .range([0, width]);
+    const xScale = d3
+      .scaleBand()
+      .domain(data.map(d => d.game.date))
+      .range([0, width]);
 
-      svg
-        .append('g')
-        .attr('transform', `translate(0, ${height})`)
-        // .attr('transform', `translate(0, ${height / 2})`)
-        .call(d3.axisBottom(xScale));
+    svg
+      .append('g')
+      .attr('transform', `translate(0, ${height})`)
+      // .attr('transform', `translate(0, ${height / 2})`)
+      .call(d3.axisBottom(xScale));
 
-      svg
-        .selectAll('rect')
-        .data(data)
-        .enter()
-        .append('rect')
-        .attr('x', d => xScale(d.game.date))
-        .attr('y', d => {
-          let runDiff = parseInt(d.stats.RunDifferential['#text'], 10);
-          return yScale(Math.min(0, -1 * runDiff));
-        })
-        .attr('width', xScale.bandwidth())
-        .attr(
-          'height',
-          d => {
-            let runDiff = parseInt(d.stats.RunDifferential['#text'], 10);
-            return Math.abs(yScale(runDiff) - yScale(0));
-          },
-        )
-        .classed('win', d => parseInt(d.stats.Wins['#text'], 10))
-        .classed('loss', d => parseInt(d.stats.Wins['#text'], 10) === 0);
-    });
+    svg
+      .selectAll('rect')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr('x', d => xScale(d.game.date))
+      .attr('y', (d) => {
+        const runDiff = parseInt(d.stats.RunDifferential['#text'], 10);
+        return yScale(Math.min(0, -1 * runDiff));
+      })
+      .attr('width', xScale.bandwidth())
+      .attr('height', (d) => {
+        const runDiff = parseInt(d.stats.RunDifferential['#text'], 10);
+        return Math.abs(yScale(runDiff) - yScale(0));
+      })
+      .classed('win', d => parseInt(d.stats.Wins['#text'], 10))
+      .classed('loss', d => parseInt(d.stats.Wins['#text'], 10) === 0);
+  });
 }
 
 updateChart();
