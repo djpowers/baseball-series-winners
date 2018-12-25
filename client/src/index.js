@@ -57,9 +57,7 @@ const options = dropDown
 options.text(d => d).attr('value', d => d);
 
 function updateChart() {
-  d3.request(`/api/seasons/${new Date().getFullYear() - 1}/${
-    d3.select('[name=team-list]').node().value
-  }`).get((error, request) => {
+  d3.request(`/api/seasons/2018/${d3.select('[name=team-list]').node().value}`).get((error, request) => {
     const data = JSON.parse(request.response).teamgamelogs.gamelogs;
 
     const extentY = d3.extent(
